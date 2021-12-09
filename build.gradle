@@ -1,6 +1,7 @@
 plugins {
 	id 'java'
 	id 'maven-publish'
+	id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
 
 group 'me.jishuna.actionconfiglib'
@@ -10,11 +11,19 @@ sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
 
 repositories {
 	mavenLocal()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    implementation 'com.github.Redempt:Crunch:master'
 }
+
+shadowJar {
+    setArchiveName('ActionConfigLib-' + this.version + '.jar')                                                     
+    relocate 'redempt.crunch', 'me.jishuna.actionconfiglib.libs.crunch'                                               
+}
+
 
 publishing {
     publications {
