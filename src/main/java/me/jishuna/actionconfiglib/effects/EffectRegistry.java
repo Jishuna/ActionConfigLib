@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.jishuna.actionconfiglib.ConfigurationEntry;
+import me.jishuna.actionconfiglib.ParsingException;
 import me.jishuna.actionconfiglib.Utils;
 
 public class EffectRegistry {
@@ -37,7 +38,7 @@ public class EffectRegistry {
 		this.effectMap.put(name, clazz);
 	}
 
-	public List<Effect> parseEffects(List<Map<?, ?>> mapList) {
+	public List<Effect> parseEffects(List<Map<?, ?>> mapList) throws ParsingException {
 		int size = mapList.size();
 		List<Effect> effects = new ArrayList<>();
 
@@ -52,7 +53,7 @@ public class EffectRegistry {
 		return effects;
 	}
 
-	private Effect parseEffect(ConfigurationEntry entry) {
+	private Effect parseEffect(ConfigurationEntry entry) throws ParsingException {
 		String type = entry.getString("type").toUpperCase();
 
 		Class<? extends Effect> clazz = this.effectMap.get(type);
@@ -66,11 +67,10 @@ public class EffectRegistry {
 		try {
 			effect = clazz.getDeclaredConstructor(ConfigurationEntry.class).newInstance((Object) entry);
 		} catch (ReflectiveOperationException | IllegalArgumentException e) {
-			e.printStackTrace();
-			if (e.getCause() != null) {
-				e.getCause().printStackTrace();
+			if (e.getCause() instanceof ParsingException ex) {
+				throw new ParsingException("Error parsing effect \"" + type + "\":", ex);
 			}
-			return null;
+			throw new ParsingException("Unknown error parsing effect \"" + type + "\"");
 		}
 		return effect;
 	}

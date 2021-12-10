@@ -70,7 +70,7 @@ public class ConditionRegistry {
 			if (e.getCause() instanceof ParsingException ex) {
 				throw new ParsingException("Error parsing condition \"" + type + "\":", ex);
 			}
-			return null;
+			throw new ParsingException("Unknown error parsing condition \"" + type + "\"");
 		}
 		return condition;
 	}
