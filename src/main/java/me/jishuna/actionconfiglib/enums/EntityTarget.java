@@ -1,4 +1,4 @@
-package me.jishuna.actionconfiglib;
+package me.jishuna.actionconfiglib.enums;
 
 import java.util.Arrays;
 import java.util.Set;

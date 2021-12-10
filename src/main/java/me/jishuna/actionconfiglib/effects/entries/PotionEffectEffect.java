@@ -5,10 +5,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import me.jishuna.actionconfiglib.ActionContext;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
-import me.jishuna.actionconfiglib.EntityTarget;
-import me.jishuna.actionconfiglib.ParsingException;
 import me.jishuna.actionconfiglib.effects.Effect;
 import me.jishuna.actionconfiglib.effects.RegisterEffect;
+import me.jishuna.actionconfiglib.enums.EntityTarget;
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
 @RegisterEffect(name = "ADD_EFFECT")
 public class PotionEffectEffect extends Effect {

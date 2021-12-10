@@ -1,4 +1,4 @@
-package me.jishuna.actionconfiglib;
+package me.jishuna.actionconfiglib.exceptions;
 
 import java.util.logging.Logger;
 

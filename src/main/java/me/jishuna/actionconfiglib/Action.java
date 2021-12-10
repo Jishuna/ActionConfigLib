@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.bukkit.configuration.ConfigurationSection;
 
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
+
 public class Action {
 
 	private final String name;

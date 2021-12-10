@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 
+import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.triggers.Trigger;
 
 public class ActionContext {

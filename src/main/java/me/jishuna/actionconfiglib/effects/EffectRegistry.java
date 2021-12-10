@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import me.jishuna.actionconfiglib.ConfigurationEntry;
-import me.jishuna.actionconfiglib.ParsingException;
-import me.jishuna.actionconfiglib.Utils;
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
+import me.jishuna.actionconfiglib.utils.Utils;
 
 public class EffectRegistry {
 	private static final Class<?> TYPE_CLASS = Effect.class;

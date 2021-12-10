@@ -14,6 +14,8 @@ public class TriggerRegistry {
 	public static final Trigger BREAK_BLOCK = createDefault("BREAK_BLOCK");
 	public static final Trigger PLACE_BLOCK = createDefault("PLACE_BLOCK");
 	public static final Trigger DAMAGED_BY_OTHER = createDefault("DAMAGED_BY_OTHER");
+	public static final Trigger DAMAGED_BY_ENTITY = createDefault("DAMAGED_BY_ENTITY");
+	public static final Trigger DAMAGED_BY_PROJECTILE = createDefault("DAMAGED_BY_PROJECTILE");
 
 	private final Map<String, Trigger> triggerMap = new HashMap<>();
 

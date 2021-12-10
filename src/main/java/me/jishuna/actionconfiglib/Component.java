@@ -5,6 +5,7 @@ import java.util.Set;
 
 import me.jishuna.actionconfiglib.conditions.Condition;
 import me.jishuna.actionconfiglib.effects.Effect;
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
 import me.jishuna.actionconfiglib.triggers.Trigger;
 
 public class Component {

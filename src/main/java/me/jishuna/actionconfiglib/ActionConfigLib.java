@@ -10,6 +10,7 @@ import me.jishuna.actionconfiglib.conditions.Condition;
 import me.jishuna.actionconfiglib.conditions.ConditionRegistry;
 import me.jishuna.actionconfiglib.effects.Effect;
 import me.jishuna.actionconfiglib.effects.EffectRegistry;
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
 import me.jishuna.actionconfiglib.triggers.TriggerRegistry;
 
 public class ActionConfigLib {

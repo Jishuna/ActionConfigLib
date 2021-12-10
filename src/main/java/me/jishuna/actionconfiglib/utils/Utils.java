@@ -1,4 +1,4 @@
-package me.jishuna.actionconfiglib;
+package me.jishuna.actionconfiglib.utils;
 
 import java.io.IOException;
 import java.util.Collections;

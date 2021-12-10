@@ -4,10 +4,10 @@ import org.bukkit.entity.LivingEntity;
 
 import me.jishuna.actionconfiglib.ActionContext;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
-import me.jishuna.actionconfiglib.EntityTarget;
-import me.jishuna.actionconfiglib.ParsingException;
 import me.jishuna.actionconfiglib.conditions.Condition;
 import me.jishuna.actionconfiglib.conditions.RegisterCondition;
+import me.jishuna.actionconfiglib.enums.EntityTarget;
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
 @RegisterCondition(name = "IS_GLIDING")
 public class IsGlidingCondition extends Condition {

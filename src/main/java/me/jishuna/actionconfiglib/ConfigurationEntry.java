@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
 import redempt.crunch.CompiledExpression;
 import redempt.crunch.Crunch;
 import redempt.crunch.exceptions.ExpressionCompilationException;
