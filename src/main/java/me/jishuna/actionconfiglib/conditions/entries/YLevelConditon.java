@@ -1,7 +1,7 @@
 package me.jishuna.actionconfiglib.conditions.entries;
 
-import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
 
 import me.jishuna.actionconfiglib.ActionContext;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
@@ -12,32 +12,35 @@ import me.jishuna.actionconfiglib.conditions.RegisterCondition;
 import redempt.crunch.CompiledExpression;
 import redempt.crunch.functional.EvaluationEnvironment;
 
-@RegisterCondition(name = "HEALTH")
-public class HealthCondition extends Condition {
+@RegisterCondition(name = "Y_LEVEL")
+public class YLevelConditon extends Condition {
 	private static final EvaluationEnvironment ENV = new EvaluationEnvironment();
 
 	static {
-		ENV.setVariableNames("%health%", "%max%");
+		ENV.setVariableNames("%y%", "%min%", "%max%");
 	}
 
 	private final EntityTarget target;
 	private final CompiledExpression expression;
 
-	public HealthCondition(ConfigurationEntry entry) throws ParsingException {
+	public YLevelConditon(ConfigurationEntry entry) throws ParsingException {
 		this.target = EntityTarget.fromString(entry.getString("target"));
 		this.expression = entry.getEquationOrThrow("expression", ENV);
 	}
 
 	@Override
 	public boolean evaluate(ActionContext context) {
-		LivingEntity entity = context.getLivingTarget(this.target);
+		Entity entity = context.getTarget(this.target);
 		if (entity == null)
 			return false;
 
-		double health = entity.getHealth();
-		double max = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+		World world = entity.getWorld();
 
-		return this.expression.evaluate(health, max) > 0d;
+		double y = entity.getLocation().getY();
+		int min = world.getMinHeight();
+		int max = world.getMaxHeight();
+
+		return this.expression.evaluate(y, min, max) > 0d;
 	}
 
 }

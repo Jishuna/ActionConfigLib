@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import me.jishuna.actionconfiglib.ActionContext;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.EntityTarget;
+import me.jishuna.actionconfiglib.ParsingException;
 import me.jishuna.actionconfiglib.conditions.Condition;
 import me.jishuna.actionconfiglib.conditions.RegisterCondition;
 
@@ -15,9 +16,9 @@ public class IsSneakingCondition extends Condition {
 	private final EntityTarget target;
 	private final boolean value;
 
-	public IsSneakingCondition(ConfigurationEntry entry) {
+	public IsSneakingCondition(ConfigurationEntry entry) throws ParsingException {
 		this.target = EntityTarget.fromString(entry.getString("target"));
-		this.value = entry.getBoolean("value", true);
+		this.value = entry.getBooleanOrThrow("value");
 	}
 
 	@Override

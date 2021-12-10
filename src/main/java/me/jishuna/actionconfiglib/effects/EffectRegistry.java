@@ -66,6 +66,10 @@ public class EffectRegistry {
 		try {
 			effect = clazz.getDeclaredConstructor(ConfigurationEntry.class).newInstance((Object) entry);
 		} catch (ReflectiveOperationException | IllegalArgumentException e) {
+			e.printStackTrace();
+			if (e.getCause() != null) {
+				e.getCause().printStackTrace();
+			}
 			return null;
 		}
 		return effect;

@@ -12,8 +12,9 @@ public class Component {
 	private final List<Condition> conditions;
 	private final List<Effect> effects;
 
-	public Component(ActionConfigLib instance, ConfigurationEntry entry) {
+	protected Component(ActionConfigLib instance, ConfigurationEntry entry) throws ParsingException {
 		this.triggers = instance.getTriggerRegistry().parseTriggers(entry.getString("triggers").toUpperCase());
+		
 		this.conditions = instance.getConditionRegistry().parseConditions(entry.getMapList("conditions"));
 		this.effects = instance.getEffectRegistry().parseEffects(entry.getMapList("effects"));
 	}

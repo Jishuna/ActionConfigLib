@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.jishuna.actionconfiglib.ConfigurationEntry;
+import me.jishuna.actionconfiglib.ParsingException;
 import me.jishuna.actionconfiglib.Utils;
 
 public class ConditionRegistry {
@@ -37,7 +38,7 @@ public class ConditionRegistry {
 		this.conditionMap.put(name, clazz);
 	}
 
-	public List<Condition> parseConditions(List<Map<?, ?>> mapList) {
+	public List<Condition> parseConditions(List<Map<?, ?>> mapList) throws ParsingException {
 		int size = mapList.size();
 		List<Condition> conditions = new ArrayList<>();
 
@@ -52,7 +53,7 @@ public class ConditionRegistry {
 		return conditions;
 	}
 
-	private Condition parseCondition(ConfigurationEntry entry) {
+	private Condition parseCondition(ConfigurationEntry entry) throws ParsingException {
 		String type = entry.getString("type").toUpperCase();
 
 		Class<? extends Condition> clazz = this.conditionMap.get(type);
@@ -66,6 +67,9 @@ public class ConditionRegistry {
 		try {
 			condition = clazz.getDeclaredConstructor(ConfigurationEntry.class).newInstance((Object) entry);
 		} catch (ReflectiveOperationException | IllegalArgumentException e) {
+			if (e.getCause() instanceof ParsingException ex) {
+				throw new ParsingException("Error parsing condition \"" + type + "\":", ex);
+			}
 			return null;
 		}
 		return condition;

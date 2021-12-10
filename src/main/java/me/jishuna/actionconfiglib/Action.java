@@ -11,9 +11,13 @@ public class Action {
 	private final String name;
 	private final List<Component> components;
 
-	public Action(ActionConfigLib instance, ConfigurationSection section) {
+	public Action(ActionConfigLib instance, ConfigurationSection section) throws ParsingException {
 		this.name = section.getString("name");
-		this.components = new ArrayList<>(Arrays.asList(instance.parseComponents(section.getMapList("components"))));
+		try {
+			this.components = new ArrayList<>(Arrays.asList(instance.parseComponentsOrThrow(section.getMapList("components"))));
+		} catch (ParsingException ex) {
+			throw new ParsingException("Error parsing action \"" + this.name + "\":", ex);
+		}
 	}
 
 	public void handleAction(ActionContext context) {

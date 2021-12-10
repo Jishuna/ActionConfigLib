@@ -28,7 +28,12 @@ public class ActionConfigLib {
 	}
 
 	public Action parseAction(ConfigurationSection section) {
-		return new Action(this, section);
+		try {
+			return new Action(this, section);
+		} catch (ParsingException ex) {
+			ex.log(this.plugin.getLogger(), 0);
+			return null;
+		}
 	}
 
 	public Component[] parseComponents(List<Map<?, ?>> mapList) {
@@ -38,7 +43,27 @@ public class ActionConfigLib {
 		for (int i = 0; i < size; i++) {
 			Map<?, ?> map = mapList.get(i);
 			if (map != null)
-				components[i] = new Component(this, new ConfigurationEntry(map));
+				try {
+					components[i] = new Component(this, new ConfigurationEntry(map));
+				} catch (ParsingException ex) {
+					new ParsingException("Error parsing components:", ex).log(this.plugin.getLogger(), 0);
+				}
+		}
+		return components;
+	}
+
+	protected Component[] parseComponentsOrThrow(List<Map<?, ?>> mapList) throws ParsingException {
+		int size = mapList.size();
+		Component[] components = new Component[size];
+
+		for (int i = 0; i < size; i++) {
+			Map<?, ?> map = mapList.get(i);
+			if (map != null)
+				try {
+					components[i] = new Component(this, new ConfigurationEntry(map));
+				} catch (ParsingException ex) {
+					throw new ParsingException("Error parsing components:", ex);
+				}
 		}
 		return components;
 	}
