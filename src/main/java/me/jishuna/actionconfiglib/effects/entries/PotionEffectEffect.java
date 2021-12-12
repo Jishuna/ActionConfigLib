@@ -19,14 +19,21 @@ public class PotionEffectEffect extends Effect {
 		this.target = EntityTarget.fromString(entry.getString("target"));
 
 		PotionEffectType type = PotionEffectType.getByName(entry.getString("effect-type").toUpperCase());
-		
+		if (type == null)
+			throw new ParsingException("The effect type \"" + type + "\" could not be found.");
+
 		int duration = entry.getIntOrThrow("duration");
-		int level = entry.getIntOrThrow("level") - 1;
-		
+		if (duration <= 0)
+			throw new ParsingException("The duration value " + duration + " is invalid, it must be greater than 0.");
+
+		int level = entry.getIntOrThrow("level");
+		if (level <= 0)
+			throw new ParsingException("The level value " + level + " is invalid, it must be greater than 0.");
+
 		boolean ambient = entry.getBoolean("ambient", false);
 		boolean hidden = entry.getBoolean("hidden", false);
 
-		this.effect = new PotionEffect(type, duration, level, ambient, !hidden);
+		this.effect = new PotionEffect(type, duration, level - 1, ambient, !hidden);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ public class TriggerRegistry {
 	public static final Trigger DAMAGED_BY_OTHER = createDefault("DAMAGED_BY_OTHER");
 	public static final Trigger DAMAGED_BY_ENTITY = createDefault("DAMAGED_BY_ENTITY");
 	public static final Trigger DAMAGED_BY_PROJECTILE = createDefault("DAMAGED_BY_PROJECTILE");
+	public static final Trigger EFFECT_GAINED = createDefault("EFFECT_GAINED");
 
 	private final Map<String, Trigger> triggerMap = new HashMap<>();
 

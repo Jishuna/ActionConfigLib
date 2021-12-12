@@ -10,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 
 import me.jishuna.actionconfiglib.enums.EntityTarget;
+import me.jishuna.actionconfiglib.enums.LocationTarget;
 import me.jishuna.actionconfiglib.triggers.Trigger;
 
 public class ActionContext {
@@ -55,6 +56,18 @@ public class ActionContext {
 	public Optional<LivingEntity> getLivingTargetOptional(EntityTarget target) {
 		return Optional.ofNullable(getLivingTarget(target));
 	}
+	
+	public Location getTargetLocation(LocationTarget target) {
+		if (target == LocationTarget.USER) {
+			return userLocation.clone();
+		} else {
+			return targetLocation.clone();
+		}
+	}
+	
+	public Optional<Location> getTargetLocationOptional(LocationTarget target) {
+		return Optional.ofNullable(getTargetLocation(target));
+	}
 
 	public Object getCustomEntry(String key) {
 		return customData.get(key);
@@ -73,7 +86,7 @@ public class ActionContext {
 	}
 
 	public Location getUserLocation() {
-		return userLocation;
+		return userLocation.clone();
 	}
 
 	public Entity getOpponent() {
@@ -81,7 +94,7 @@ public class ActionContext {
 	}
 
 	public Location getTargetLocation() {
-		return targetLocation;
+		return targetLocation.clone();
 	}
 
 	public static class Builder {
