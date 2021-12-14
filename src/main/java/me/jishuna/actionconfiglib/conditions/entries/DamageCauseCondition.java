@@ -39,5 +39,4 @@ public class DamageCauseCondition extends Condition {
 		}
 		return false;
 	}
-
 }
