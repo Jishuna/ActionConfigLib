@@ -20,7 +20,7 @@ public class PotionEffectEffect extends Effect {
 
 		PotionEffectType type = PotionEffectType.getByName(entry.getString("effect-type").toUpperCase());
 		if (type == null)
-			throw new ParsingException("The effect type \"" + type + "\" could not be found.");
+			throw new ParsingException("The effect type \"" + entry.getString("effect-type") + "\" could not be found.");
 
 		int duration = entry.getIntOrThrow("duration");
 		if (duration <= 0)

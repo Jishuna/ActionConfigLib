@@ -123,6 +123,7 @@ public class ActionContext {
 
 		public Builder opponent(Entity opponent) {
 			this.opponent = opponent;
+			this.targetLocation = opponent.getLocation();
 			return this;
 		}
 

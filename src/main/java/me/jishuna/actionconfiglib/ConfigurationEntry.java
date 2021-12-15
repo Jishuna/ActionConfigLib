@@ -22,6 +22,15 @@ public class ConfigurationEntry {
 		return entry != null ? entry.toString() : null;
 	}
 
+	public String getStringOrThrow(String key) throws ParsingException {
+		Object entry = this.entryMap.get(key);
+
+		if (entry == null)
+			throw new ParsingException("Invalid value \"null\" for key \"" + key + "\", String expected.");
+
+		return entry.toString();
+	}
+
 	public boolean getBoolean(String key, boolean def) {
 		Object entry = this.entryMap.get(key);
 		return (entry instanceof Boolean) ? (Boolean) entry : def;
@@ -57,6 +66,15 @@ public class ConfigurationEntry {
 	public long getLong(String key) {
 		Object entry = this.entryMap.get(key);
 		return (entry instanceof Number) ? ((Number) entry).longValue() : 0l;
+	}
+	
+	public long getLongOrThrow(String key) throws ParsingException {
+		Object entry = this.entryMap.get(key);
+
+		if (entry instanceof Number num)
+			return num.longValue();
+		throw new ParsingException("Invalid value \"" + (entry == null ? "null" : entry.toString()) + "\" for key \""
+				+ key + "\", Integer expected.");
 	}
 
 	public double getDouble(String key) {

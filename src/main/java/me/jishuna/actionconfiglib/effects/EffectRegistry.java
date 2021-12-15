@@ -70,7 +70,7 @@ public class EffectRegistry {
 			if (e.getCause() instanceof ParsingException ex) {
 				throw new ParsingException("Error parsing effect \"" + type + "\":", ex);
 			}
-			throw new ParsingException("Unknown error parsing effect \"" + type + "\"");
+			throw new ParsingException("Unknown error parsing effect \"" + type + "\": " + e.getMessage());
 		}
 		return effect;
 	}

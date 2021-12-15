@@ -19,7 +19,7 @@ public class RemovePotionEffect extends Effect {
 
 		this.type = PotionEffectType.getByName(entry.getString("effect-type").toUpperCase());
 		if (type == null)
-			throw new ParsingException("The effect type \"" + type + "\" could not be found.");
+			throw new ParsingException("The effect type \"" + entry.getString("effect-type") + "\" could not be found.");
 	}
 
 	@Override

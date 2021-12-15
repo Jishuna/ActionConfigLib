@@ -18,6 +18,8 @@ public class TriggerRegistry {
 	public static final Trigger DAMAGED_BY_PROJECTILE = createDefault("DAMAGED_BY_PROJECTILE");
 	public static final Trigger EFFECT_GAINED = createDefault("EFFECT_GAINED");
 	public static final Trigger DURABILITY_LOST = createDefault("DURABILITY_LOST");
+	public static final Trigger ENTITY_TARGET = createDefault("ENTITY_TARGET");
+	public static final Trigger HAND_ITEM_SWAPPED = createDefault("HAND_ITEM_SWAPPED");
 
 	private final Map<String, Trigger> triggerMap = new HashMap<>();
 
