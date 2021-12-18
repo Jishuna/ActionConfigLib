@@ -7,7 +7,6 @@ import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
 @RegisterEffect(name = "DELAY")
-//TODO implement functionality 
 public class DelayEffect extends Effect {
 	private final int delay;
 
