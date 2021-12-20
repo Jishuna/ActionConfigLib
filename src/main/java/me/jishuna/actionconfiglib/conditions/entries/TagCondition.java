@@ -3,6 +3,7 @@ package me.jishuna.actionconfiglib.conditions.entries;
 import org.bukkit.entity.LivingEntity;
 
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.TagManager;
 import me.jishuna.actionconfiglib.conditions.Condition;
@@ -10,6 +11,7 @@ import me.jishuna.actionconfiglib.conditions.RegisterCondition;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "target", "tag", "value" })
 @RegisterCondition(name = "HAS_TAG")
 public class TagCondition extends Condition {
 	private final EntityTarget target;

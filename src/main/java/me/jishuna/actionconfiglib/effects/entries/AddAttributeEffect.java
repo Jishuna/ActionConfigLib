@@ -7,12 +7,14 @@ import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.Player;
 
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.effects.Effect;
 import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "target", "name", "attribute", "opperation", "value", "scale-health" })
 @RegisterEffect(name = "ADD_ATTRIBUTE")
 public class AddAttributeEffect extends Effect {
 	private final Attribute attribute;

@@ -1,34 +1,32 @@
 package me.jishuna.actionconfiglib.conditions.entries;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 
+import com.google.common.base.Enums;
+
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.conditions.Condition;
 import me.jishuna.actionconfiglib.conditions.RegisterCondition;
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "reasons" })
 @RegisterCondition(name = "TARGET_REASON")
 public class TargetReasonCondition extends Condition {
-	private static final Set<String> ALL_CAUSES = Arrays.stream(TargetReason.values()).map(Enum::toString)
-			.collect(Collectors.toSet());
-	
+
 	private final Set<TargetReason> causes = EnumSet.noneOf(TargetReason.class);
 
-	public TargetReasonCondition(ConfigurationEntry entry) {
-		String[] data = entry.getString("reasons").toUpperCase().split(",");
+	public TargetReasonCondition(ConfigurationEntry entry) throws ParsingException {
+		String[] data = entry.getString("reasons").split(",");
 
-		for (String causeString : data) {
-			if (ALL_CAUSES.contains(causeString)) {
-				this.causes.add(TargetReason.valueOf(causeString));
-			} else {
-				System.err.println(causeString);
-			}
+		for (String targetReason : data) {
+			causes.add(Enums.getIfPresent(TargetReason.class, targetReason.toUpperCase()).toJavaUtil().orElseThrow(
+					() -> new ParsingException("The target reason \"" + targetReason + "\" could not be found.")));
 		}
 	}
 

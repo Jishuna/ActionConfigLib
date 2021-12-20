@@ -1,7 +1,6 @@
 package me.jishuna.actionconfiglib.conditions.entries;
 
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 import me.jishuna.actionconfiglib.ActionContext;
 import me.jishuna.actionconfiglib.ArgumentFormat;
@@ -14,18 +13,18 @@ import redempt.crunch.CompiledExpression;
 import redempt.crunch.functional.EvaluationEnvironment;
 
 @ArgumentFormat(format = { "target", "expression" })
-@RegisterCondition(name = "EXP_LEVEL")
-public class ExpLevelCondition extends Condition {
+@RegisterCondition(name = "AIR")
+public class AirCondition extends Condition {
 	private static final EvaluationEnvironment ENV = new EvaluationEnvironment();
 
 	static {
-		ENV.setVariableNames("%level%");
+		ENV.setVariableNames("%air%", "%max%");
 	}
 
 	private final EntityTarget target;
 	private final CompiledExpression expression;
 
-	public ExpLevelCondition(ConfigurationEntry entry) throws ParsingException {
+	public AirCondition(ConfigurationEntry entry) throws ParsingException {
 		this.target = EntityTarget.fromString(entry.getString("target"));
 		this.expression = entry.getEquationOrThrow("expression", ENV);
 	}
@@ -33,9 +32,10 @@ public class ExpLevelCondition extends Condition {
 	@Override
 	public boolean evaluate(ActionContext context) {
 		LivingEntity entity = context.getLivingTarget(this.target);
-		if (!(entity instanceof Player player))
-			return false;
+		
+		int air = entity.getRemainingAir();
+		int maxAir = entity.getMaximumAir();
 
-		return this.expression.evaluate(player.getLevel()) > 0d;
+		return this.expression.evaluate(air, maxAir) > 0d;
 	}
 }

@@ -4,12 +4,14 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.effects.Effect;
 import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "target", "item-type", "ticks" })
 @RegisterEffect(name = "ITEM_COOLDOWN")
 public class ItemCooldownEffect extends Effect {
 	private final EntityTarget target;

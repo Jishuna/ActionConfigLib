@@ -4,6 +4,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.conditions.Condition;
 import me.jishuna.actionconfiglib.conditions.RegisterCondition;
@@ -12,6 +13,7 @@ import me.jishuna.actionconfiglib.exceptions.ParsingException;
 import redempt.crunch.CompiledExpression;
 import redempt.crunch.functional.EvaluationEnvironment;
 
+@ArgumentFormat(format = { "target", "expression" })
 @RegisterCondition(name = "HEALTH")
 public class HealthCondition extends Condition {
 	private static final EvaluationEnvironment ENV = new EvaluationEnvironment();

@@ -22,11 +22,11 @@ public class Component {
 	private final boolean hasDelay;
 	private final JavaPlugin plugin;
 
-	protected Component(ActionConfigLib instance, ConfigurationEntry entry) throws ParsingException {
+	protected Component(ActionConfigLib instance, ConfigurationMapEntry entry) throws ParsingException {
 		this.triggers = instance.getTriggerRegistry().parseTriggers(entry.getString("triggers").toUpperCase());
 
-		this.conditions = instance.getConditionRegistry().parseConditions(entry.getMapList("conditions"));
-		this.effects = instance.getEffectRegistry().parseEffects(entry.getMapList("effects"));
+		this.conditions = instance.getConditionRegistry().parseConditions(entry);
+		this.effects = instance.getEffectRegistry().parseEffects(entry);
 
 		this.hasDelay = this.effects.stream().anyMatch(effect -> effect instanceof DelayEffect);
 		this.plugin = instance.getOwningPlugin();

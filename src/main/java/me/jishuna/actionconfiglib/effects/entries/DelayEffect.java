@@ -1,11 +1,13 @@
 package me.jishuna.actionconfiglib.effects.entries;
 
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.effects.Effect;
 import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "ticks" })
 @RegisterEffect(name = "DELAY")
 public class DelayEffect extends Effect {
 	private final int delay;

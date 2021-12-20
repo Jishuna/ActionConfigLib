@@ -6,12 +6,14 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.effects.Effect;
 import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "target", "name", "attribute", "scale-health"})
 @RegisterEffect(name = "REMOVE_ATTRIBUTE")
 public class RemoveAttributeEffect extends Effect {
 	private final Attribute attribute;

@@ -45,7 +45,7 @@ public class ActionConfigLib {
 			Map<?, ?> map = mapList.get(i);
 			if (map != null)
 				try {
-					components[i] = new Component(this, new ConfigurationEntry(map));
+					components[i] = new Component(this, new ConfigurationMapEntry(map));
 				} catch (ParsingException ex) {
 					new ParsingException("Error parsing components:", ex).log(this.plugin.getLogger(), 0);
 				}
@@ -61,7 +61,7 @@ public class ActionConfigLib {
 			Map<?, ?> map = mapList.get(i);
 			if (map != null)
 				try {
-					components[i] = new Component(this, new ConfigurationEntry(map));
+					components[i] = new Component(this, new ConfigurationMapEntry(map));
 				} catch (ParsingException ex) {
 					throw new ParsingException("Error parsing components:", ex);
 				}

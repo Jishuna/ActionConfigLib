@@ -4,12 +4,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Projectile;
 
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.effects.Effect;
 import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "target", "projectile-type" })
 @RegisterEffect(name = "LAUNCH_PROJECTILE")
 public class LaunchProjectileEffect extends Effect {
 	private final EntityType type;

@@ -1,34 +1,31 @@
 package me.jishuna.actionconfiglib.conditions.entries;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+import com.google.common.base.Enums;
+
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.conditions.Condition;
 import me.jishuna.actionconfiglib.conditions.RegisterCondition;
+import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "causes" })
 @RegisterCondition(name = "DAMAGE_CAUSE")
 public class DamageCauseCondition extends Condition {
-	private static final Set<String> ALL_CAUSES = Arrays.stream(DamageCause.values()).map(Enum::toString)
-			.collect(Collectors.toSet());
-	
 	private final Set<DamageCause> causes = EnumSet.noneOf(DamageCause.class);
 
-	public DamageCauseCondition(ConfigurationEntry entry) {
-		String[] data = entry.getString("causes").toUpperCase().split(",");
+	public DamageCauseCondition(ConfigurationEntry entry) throws ParsingException {
+		String[] data = entry.getString("causes").split(",");
 
 		for (String causeString : data) {
-			if (ALL_CAUSES.contains(causeString)) {
-				this.causes.add(DamageCause.valueOf(causeString));
-			} else {
-				System.err.println(causeString);
-			}
+			causes.add(Enums.getIfPresent(DamageCause.class, causeString.toUpperCase()).toJavaUtil().orElseThrow(
+					() -> new ParsingException("The damage cause \"" + causeString + "\" could not be found.")));
 		}
 	}
 

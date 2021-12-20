@@ -1,6 +1,7 @@
 package me.jishuna.actionconfiglib.effects.entries;
 
 import me.jishuna.actionconfiglib.ActionContext;
+import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
 import me.jishuna.actionconfiglib.TagManager;
 import me.jishuna.actionconfiglib.effects.Effect;
@@ -8,6 +9,7 @@ import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
+@ArgumentFormat(format = { "target", "tag" })
 @RegisterEffect(name = "ADD_TAG")
 public class AddTagEffect extends Effect {
 	private final EntityTarget target;

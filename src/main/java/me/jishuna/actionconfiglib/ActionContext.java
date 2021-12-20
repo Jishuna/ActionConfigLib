@@ -17,17 +17,17 @@ public class ActionContext {
 	private final Trigger trigger;
 	private final Event event;
 	private final Entity user;
-	private final Location userLocation;
+	private final Location origin;
 	private final Entity opponent;
 	private final Location targetLocation;
 	private final Map<String, Object> customData;
 
-	private ActionContext(Trigger trigger, Event event, Entity user, Location userLocation, Entity opponent,
+	private ActionContext(Trigger trigger, Event event, Entity user, Location origin, Entity opponent,
 			Location targetLocation, Map<String, Object> customData) {
 		this.trigger = trigger;
 		this.event = event;
 		this.user = user;
-		this.userLocation = userLocation;
+		this.origin = origin;
 		this.opponent = opponent;
 		this.targetLocation = targetLocation;
 		this.customData = customData;
@@ -56,15 +56,22 @@ public class ActionContext {
 	public Optional<LivingEntity> getLivingTargetOptional(EntityTarget target) {
 		return Optional.ofNullable(getLivingTarget(target));
 	}
-	
+
 	public Location getTargetLocation(LocationTarget target) {
-		if (target == LocationTarget.USER) {
-			return userLocation.clone();
-		} else {
-			return targetLocation.clone();
+		switch (target) {
+		case OPPONENT:
+			return (opponent != null) ? opponent.getLocation() : null;
+		case ORIGIN:
+			return getOrigin();
+		case TARGET:
+			return getTargetLocation();
+		case USER:
+			return (user != null) ? user.getLocation() : null;
+		default:
+			return null;
 		}
 	}
-	
+
 	public Optional<Location> getTargetLocationOptional(LocationTarget target) {
 		return Optional.ofNullable(getTargetLocation(target));
 	}
@@ -85,8 +92,8 @@ public class ActionContext {
 		return user;
 	}
 
-	public Location getUserLocation() {
-		return userLocation.clone();
+	public Location getOrigin() {
+		return (origin != null) ? origin.clone() : null;
 	}
 
 	public Entity getOpponent() {
@@ -94,7 +101,7 @@ public class ActionContext {
 	}
 
 	public Location getTargetLocation() {
-		return targetLocation.clone();
+		return (targetLocation != null) ? targetLocation.clone() : null;
 	}
 
 	public static class Builder {
@@ -102,7 +109,7 @@ public class ActionContext {
 		private Event event;
 		private Entity user;
 		private Entity opponent;
-		private Location userLocation;
+		private Location origin;
 		private Location targetLocation;
 		private final Map<String, Object> customData = new HashMap<>();
 
@@ -117,7 +124,7 @@ public class ActionContext {
 
 		public Builder user(Entity user) {
 			this.user = user;
-			this.userLocation = user.getLocation();
+			this.origin = user.getLocation();
 			return this;
 		}
 
@@ -138,7 +145,7 @@ public class ActionContext {
 		}
 
 		public ActionContext build() {
-			return new ActionContext(trigger, event, user, userLocation, opponent, targetLocation, customData);
+			return new ActionContext(trigger, event, user, origin, opponent, targetLocation, customData);
 		}
 	}
 }

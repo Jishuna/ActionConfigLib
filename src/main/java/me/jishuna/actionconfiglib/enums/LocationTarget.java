@@ -8,13 +8,13 @@ import me.jishuna.actionconfiglib.exceptions.ParsingException;
 
 public enum LocationTarget {
 
-	USER, TARGET;
+	USER, OPPONENT, ORIGIN, TARGET;
 
 	public static LocationTarget fromString(String name) throws ParsingException {
 		name = name.toUpperCase();
 
 		if (!TYPES.contains(name))
-			throw new ParsingException("Invalid target location \"" + name + "\", expected user or target.");
+			throw new ParsingException("Invalid target location \"" + name + "\", expected user, opponent, origin, or target.");
 		return LocationTarget.valueOf(name);
 	}
 

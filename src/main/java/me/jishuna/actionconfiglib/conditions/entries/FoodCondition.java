@@ -4,7 +4,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import me.jishuna.actionconfiglib.ActionContext;
-import me.jishuna.actionconfiglib.ConfigurationEntry;
+import me.jishuna.actionconfiglib.ConfigurationMapEntry;
 import me.jishuna.actionconfiglib.conditions.Condition;
 import me.jishuna.actionconfiglib.conditions.RegisterCondition;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
@@ -23,7 +23,7 @@ public class FoodCondition extends Condition {
 	private final EntityTarget target;
 	private final CompiledExpression expression;
 
-	public FoodCondition(ConfigurationEntry entry) throws ParsingException {
+	public FoodCondition(ConfigurationMapEntry entry) throws ParsingException {
 		this.target = EntityTarget.fromString(entry.getString("target"));
 		this.expression = entry.getEquationOrThrow("expression", ENV);
 	}

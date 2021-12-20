@@ -1,41 +1,40 @@
-package me.jishuna.actionconfiglib.conditions.entries;
-
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+package me.jishuna.actionconfiglib.effects.entries;
 
 import me.jishuna.actionconfiglib.ActionContext;
 import me.jishuna.actionconfiglib.ArgumentFormat;
 import me.jishuna.actionconfiglib.ConfigurationEntry;
-import me.jishuna.actionconfiglib.conditions.Condition;
-import me.jishuna.actionconfiglib.conditions.RegisterCondition;
+import me.jishuna.actionconfiglib.effects.Effect;
+import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
 import redempt.crunch.CompiledExpression;
 import redempt.crunch.functional.EvaluationEnvironment;
 
 @ArgumentFormat(format = { "target", "expression" })
-@RegisterCondition(name = "EXP_LEVEL")
-public class ExpLevelCondition extends Condition {
+@RegisterEffect(name = "SET_AIR")
+public class SetAirEffect extends Effect {
 	private static final EvaluationEnvironment ENV = new EvaluationEnvironment();
 
 	static {
-		ENV.setVariableNames("%level%");
+		ENV.setVariableNames("%air%", "%max%");
 	}
 
 	private final EntityTarget target;
 	private final CompiledExpression expression;
 
-	public ExpLevelCondition(ConfigurationEntry entry) throws ParsingException {
+	public SetAirEffect(ConfigurationEntry entry) throws ParsingException {
 		this.target = EntityTarget.fromString(entry.getString("target"));
 		this.expression = entry.getEquationOrThrow("expression", ENV);
 	}
 
 	@Override
-	public boolean evaluate(ActionContext context) {
-		LivingEntity entity = context.getLivingTarget(this.target);
-		if (!(entity instanceof Player player))
-			return false;
+	public void evaluate(ActionContext context) {
+		context.getLivingTargetOptional(this.target).ifPresent(entity -> {
+			int air = entity.getRemainingAir();
+			int maxAir = entity.getMaximumAir();
 
-		return this.expression.evaluate(player.getLevel()) > 0d;
+			entity.setRemainingAir((int) Math.round(this.expression.evaluate(air, maxAir)));
+		});
 	}
+
 }
