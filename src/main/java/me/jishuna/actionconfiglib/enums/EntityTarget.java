@@ -18,6 +18,13 @@ public enum EntityTarget {
 		return EntityTarget.valueOf(name);
 	}
 
+	public static EntityTarget getOpposite(EntityTarget target) {
+		return switch (target) {
+		case USER -> OPPONENT;
+		case OPPONENT -> USER;
+		};
+	}
+
 	private static final Set<String> TYPES = Arrays.stream(EntityTarget.values()).map(Enum::toString)
 			.collect(Collectors.toSet());
 

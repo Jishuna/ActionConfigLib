@@ -92,17 +92,24 @@ public class ConfigurationListEntry extends ConfigurationEntry {
 
 	public double getDoubleOrThrow(String key) throws ParsingException {
 		String entry = this.entryMap.get(key);
+		ParsingException exception = new ParsingException("Invalid value \""
+				+ (entry == null ? "null" : entry.toString()) + "\" for key \"" + key + "\", Number expected.");
+
+		if (entry == null)
+			throw exception;
 
 		try {
 			return Double.parseDouble(entry);
 		} catch (NumberFormatException ex) {
-			throw new ParsingException("Invalid value \"" + (entry == null ? "null" : entry.toString())
-					+ "\" for key \"" + key + "\", Number expected.");
+			throw exception;
 		}
 	}
 
 	public double getDouble(String key, double def) {
 		String entry = this.entryMap.get(key);
+
+		if (entry == null)
+			return def;
 
 		try {
 			return Double.parseDouble(entry);
@@ -138,7 +145,7 @@ public class ConfigurationListEntry extends ConfigurationEntry {
 			throw exception;
 		}
 	}
-	
+
 	public boolean has(String key) {
 		return this.entryMap.containsKey(key);
 	}

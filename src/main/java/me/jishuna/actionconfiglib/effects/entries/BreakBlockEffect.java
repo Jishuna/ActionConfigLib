@@ -24,7 +24,7 @@ public class BreakBlockEffect extends Effect {
 
 	public BreakBlockEffect(ConfigurationEntry entry) throws ParsingException {
 		this.target = EntityTarget.fromString(entry.getString("target"));
-		this.locationTarget = LocationTarget.fromString("target-location");
+		this.locationTarget = LocationTarget.fromString(entry.getString("target-location"));
 
 		this.xOff = entry.getInt("x-offset", 0);
 		this.yOff = entry.getInt("y-offset", 0);

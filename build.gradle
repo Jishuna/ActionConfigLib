@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
 	id 'java'
 	id 'maven-publish'
@@ -19,17 +21,32 @@ dependencies {
     implementation 'com.github.Redempt:Crunch:master'
 }
 
+shadowJar.configure {
+	archiveClassifier.set('')
+}
+
 shadowJar {
     setArchiveName('ActionConfigLib-' + this.version + '.jar')                                                     
     relocate 'redempt.crunch', 'me.jishuna.actionconfiglib.libs.crunch'                                               
 }
 
+build {
+    dependsOn shadowJar
+}
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-        }
+processResources {
+	duplicatesStrategy = DuplicatesStrategy.WARN
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
     }
 }
 
+publishing {
+  publications {
+    shadow(MavenPublication) { publication ->
+      project.shadow.component(publication)
+    }
+  }
+}
+
+shadowJar.shouldRunAfter build

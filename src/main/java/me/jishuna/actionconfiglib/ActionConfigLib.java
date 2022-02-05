@@ -3,7 +3,6 @@ package me.jishuna.actionconfiglib;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.jishuna.actionconfiglib.conditions.Condition;
@@ -28,32 +27,7 @@ public class ActionConfigLib {
 		this.triggerRegistry = new TriggerRegistry();
 	}
 
-	public Action parseAction(ConfigurationSection section) {
-		try {
-			return new Action(this, section);
-		} catch (ParsingException ex) {
-			ex.log(this.plugin.getLogger(), 0);
-			return null;
-		}
-	}
-
-	public Component[] parseComponents(List<Map<?, ?>> mapList) {
-		int size = mapList.size();
-		Component[] components = new Component[size];
-
-		for (int i = 0; i < size; i++) {
-			Map<?, ?> map = mapList.get(i);
-			if (map != null)
-				try {
-					components[i] = new Component(this, new ConfigurationMapEntry(map));
-				} catch (ParsingException ex) {
-					new ParsingException("Error parsing components:", ex).log(this.plugin.getLogger(), 0);
-				}
-		}
-		return components;
-	}
-
-	protected Component[] parseComponentsOrThrow(List<Map<?, ?>> mapList) throws ParsingException {
+	public Component[] parseComponents(List<Map<?, ?>> mapList) throws ParsingException {
 		int size = mapList.size();
 		Component[] components = new Component[size];
 
@@ -69,8 +43,16 @@ public class ActionConfigLib {
 		return components;
 	}
 
+	public void registerEffects(String packageName) {
+		this.effectRegistry.registerEffects(packageName);
+	}
+
 	public void registerEffect(String name, Class<? extends Effect> clazz) {
 		this.effectRegistry.registerEffect(name, clazz);
+	}
+
+	public void registerConditions(String packageName) {
+		this.conditionRegistry.registerConditions(packageName);
 	}
 
 	public void registerCondition(String name, Class<? extends Condition> clazz) {

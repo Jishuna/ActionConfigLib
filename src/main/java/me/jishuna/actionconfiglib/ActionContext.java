@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.ItemStack;
 
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.enums.LocationTarget;
@@ -16,21 +17,31 @@ import me.jishuna.actionconfiglib.triggers.Trigger;
 public class ActionContext {
 	private final Trigger trigger;
 	private final Event event;
+	private final ItemStack item;
 	private final Entity user;
 	private final Location origin;
 	private final Entity opponent;
 	private final Location targetLocation;
 	private final Map<String, Object> customData;
 
-	private ActionContext(Trigger trigger, Event event, Entity user, Location origin, Entity opponent,
+	private ActionContext(Trigger trigger, Event event, ItemStack item, Entity user, Location origin, Entity opponent,
 			Location targetLocation, Map<String, Object> customData) {
 		this.trigger = trigger;
 		this.event = event;
+		this.item = item;
 		this.user = user;
 		this.origin = origin;
 		this.opponent = opponent;
 		this.targetLocation = targetLocation;
 		this.customData = customData;
+	}
+	
+	public ItemStack getItemDirect() {
+		return this.item;
+	}
+
+	public Optional<ItemStack> getItem() {
+		return Optional.ofNullable(getItemDirect());
 	}
 
 	public Entity getTarget(EntityTarget target) {
@@ -107,6 +118,7 @@ public class ActionContext {
 	public static class Builder {
 		private final Trigger trigger;
 		private Event event;
+		private ItemStack item;
 		private Entity user;
 		private Entity opponent;
 		private Location origin;
@@ -119,6 +131,11 @@ public class ActionContext {
 
 		public Builder event(Event event) {
 			this.event = event;
+			return this;
+		}
+		
+		public Builder item(ItemStack item) {
+			this.item = item;
 			return this;
 		}
 
@@ -145,7 +162,7 @@ public class ActionContext {
 		}
 
 		public ActionContext build() {
-			return new ActionContext(trigger, event, user, origin, opponent, targetLocation, customData);
+			return new ActionContext(trigger, event, item, user, origin, opponent, targetLocation, customData);
 		}
 	}
 }

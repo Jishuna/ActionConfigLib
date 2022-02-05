@@ -22,13 +22,14 @@ public class EffectRegistry {
 		reloadEffects();
 	}
 
-	// Pretty sure this is not an unchecked cast
-	@SuppressWarnings("unchecked")
 	public void reloadEffects() {
 		this.effectMap.clear();
+		registerEffects("me.jishuna.actionconfiglib.effects.entries");
+	}
 
-		for (Class<?> clazz : Utils.getAllClassesInSubpackages("me.jishuna.actionconfiglib.effects.entries",
-				this.getClass().getClassLoader())) {
+	@SuppressWarnings("unchecked")
+	public void registerEffects(String packageName) {
+		for (Class<?> clazz : Utils.getAllClassesInSubpackages(packageName, this.getClass().getClassLoader())) {
 			if (!TYPE_CLASS.isAssignableFrom(clazz))
 				continue;
 
@@ -108,7 +109,7 @@ public class EffectRegistry {
 		for (int index = 0; index < length; index++) {
 			if (index >= effectData.length)
 				break;
-			
+
 			if (index == length - 1) {
 				dataMap.put(format.format()[index],
 						String.join(",", Arrays.copyOfRange(effectData, index, effectData.length)));
@@ -123,7 +124,7 @@ public class EffectRegistry {
 		try {
 			effect = clazz.getDeclaredConstructor(ConfigurationEntry.class).newInstance((Object) entry);
 		} catch (ReflectiveOperationException | IllegalArgumentException e) {
-			if (e.getCause()instanceof ParsingException ex) {
+			if (e.getCause() instanceof ParsingException ex) {
 				throw new ParsingException("Error parsing effect \"" + type + "\":", ex);
 			}
 			e.printStackTrace();
@@ -141,7 +142,7 @@ public class EffectRegistry {
 		try {
 			effect = clazz.getDeclaredConstructor(ConfigurationEntry.class).newInstance((Object) entry);
 		} catch (ReflectiveOperationException | IllegalArgumentException e) {
-			if (e.getCause()instanceof ParsingException ex) {
+			if (e.getCause() instanceof ParsingException ex) {
 				throw new ParsingException("Error parsing effect \"" + type + "\":", ex);
 			}
 			e.printStackTrace();

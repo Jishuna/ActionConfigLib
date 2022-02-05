@@ -35,9 +35,9 @@ public class SoundEffect extends Effect {
 		this.volume = (float) entry.getDoubleOrThrow("volume");
 		this.pitch = (float) entry.getDoubleOrThrow("pitch");
 
-		this.xOffset = entry.getDouble("xOffset", 0);
-		this.yOffset = entry.getDouble("yOffset", 0);
-		this.zOffset = entry.getDouble("zOffset", 0);
+		this.xOffset = entry.getDouble("x-offset", 0);
+		this.yOffset = entry.getDouble("y-offset", 0);
+		this.zOffset = entry.getDouble("z-offset", 0);
 	}
 
 	@Override

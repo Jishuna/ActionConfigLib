@@ -27,9 +27,9 @@ public class EntityTypeCondition extends Condition {
 
 		String[] data = entry.getString("types").split(",");
 
-		for (String causeString : data) {
-			types.add(Enums.getIfPresent(EntityType.class, causeString.toUpperCase()).toJavaUtil().orElseThrow(
-					() -> new ParsingException("The entity type \"" + causeString + "\" could not be found.")));
+		for (String typeString : data) {
+			types.add(Enums.getIfPresent(EntityType.class, typeString.toUpperCase()).toJavaUtil().orElseThrow(
+					() -> new ParsingException("The entity type \"" + typeString + "\" could not be found.")));
 		}
 	}
 

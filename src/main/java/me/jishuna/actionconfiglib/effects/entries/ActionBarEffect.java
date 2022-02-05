@@ -1,5 +1,6 @@
 package me.jishuna.actionconfiglib.effects.entries;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import me.jishuna.actionconfiglib.ActionContext;
@@ -9,27 +10,31 @@ import me.jishuna.actionconfiglib.effects.Effect;
 import me.jishuna.actionconfiglib.effects.RegisterEffect;
 import me.jishuna.actionconfiglib.enums.EntityTarget;
 import me.jishuna.actionconfiglib.exceptions.ParsingException;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 
-@ArgumentFormat(format = { "target", "message" })
-@RegisterEffect(name = "ACTION_BAR")
-public class ItemCooldownEffect extends Effect {
+@ArgumentFormat(format = { "target", "item-type", "ticks" })
+@RegisterEffect(name = "ITEM_COOLDOWN")
+public class ActionBarEffect extends Effect {
 	private final EntityTarget target;
-	private final String message;
+	private final Material type;
+	private final int ticks;
 
-	public ItemCooldownEffect(ConfigurationEntry entry) throws ParsingException {
+	public ActionBarEffect(ConfigurationEntry entry) throws ParsingException {
 		this.target = EntityTarget.fromString(entry.getString("target"));
+		this.type = Material.matchMaterial(entry.getString("item-type"));
+		if (this.type == null)
+			throw new ParsingException("The item-type value " + entry.getString("item-type") + " could not be found.");
 
-		this.message = ChatColor.translateAlternateColorCodes('&', entry.getStringOrThrow("message"));
+		this.ticks = entry.getIntOrThrow("ticks");
+		if (ticks < 0)
+			throw new ParsingException("The ticks value " + ticks + " is invalid, it must be greater than or equal to 0.");
+
 	}
 
 	@Override
 	public void evaluate(ActionContext context) {
 		context.getLivingTargetOptional(this.target).ifPresent(entity -> {
 			if (entity instanceof Player player) {
-				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(this.message));
+				player.setCooldown(this.type, this.ticks);
 			}
 		});
 	}

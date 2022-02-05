@@ -23,7 +23,12 @@ public class Component {
 	private final JavaPlugin plugin;
 
 	protected Component(ActionConfigLib instance, ConfigurationMapEntry entry) throws ParsingException {
-		this.triggers = instance.getTriggerRegistry().parseTriggers(entry.getString("triggers").toUpperCase());
+		String triggerString = entry.getString("triggers");
+		if (triggerString == null) {
+			throw new ParsingException("Missing trigger(s)");
+		}
+		
+		this.triggers = instance.getTriggerRegistry().parseTriggers(triggerString.toUpperCase());
 
 		this.conditions = instance.getConditionRegistry().parseConditions(entry);
 		this.effects = instance.getEffectRegistry().parseEffects(entry);

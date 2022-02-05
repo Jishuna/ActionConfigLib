@@ -22,13 +22,14 @@ public class ConditionRegistry {
 		reloadConditions();
 	}
 
-	// Pretty sure this is not an unchecked cast
-	@SuppressWarnings("unchecked")
 	public void reloadConditions() {
 		this.conditionMap.clear();
+		registerConditions("me.jishuna.actionconfiglib.conditions.entries");
+	}
 
-		for (Class<?> clazz : Utils.getAllClassesInSubpackages("me.jishuna.actionconfiglib.conditions.entries",
-				this.getClass().getClassLoader())) {
+	@SuppressWarnings("unchecked")
+	public void registerConditions(String packageName) {
+		for (Class<?> clazz : Utils.getAllClassesInSubpackages(packageName, this.getClass().getClassLoader())) {
 			if (!TYPE_CLASS.isAssignableFrom(clazz))
 				continue;
 
@@ -107,7 +108,7 @@ public class ConditionRegistry {
 		for (int index = 0; index < length; index++) {
 			if (index >= conditionData.length)
 				break;
-			
+
 			if (index == length - 1) {
 				dataMap.put(format.format()[index],
 						String.join(",", Arrays.copyOfRange(conditionData, index, conditionData.length)));
@@ -122,7 +123,7 @@ public class ConditionRegistry {
 		try {
 			condition = clazz.getDeclaredConstructor(ConfigurationEntry.class).newInstance((Object) entry);
 		} catch (ReflectiveOperationException | IllegalArgumentException e) {
-			if (e.getCause()instanceof ParsingException ex) {
+			if (e.getCause() instanceof ParsingException ex) {
 				throw new ParsingException("Error parsing condition \"" + type + "\":", ex);
 			}
 			e.printStackTrace();
@@ -140,7 +141,7 @@ public class ConditionRegistry {
 		try {
 			condition = clazz.getDeclaredConstructor(ConfigurationEntry.class).newInstance((Object) entry);
 		} catch (ReflectiveOperationException | IllegalArgumentException e) {
-			if (e.getCause()instanceof ParsingException ex) {
+			if (e.getCause() instanceof ParsingException ex) {
 				throw new ParsingException("Error parsing condition \"" + type + "\":", ex);
 			}
 			e.printStackTrace();
